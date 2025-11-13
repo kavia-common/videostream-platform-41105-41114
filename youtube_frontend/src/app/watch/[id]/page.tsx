@@ -42,24 +42,27 @@ async function RecommendationsSection({ id }: { id: string }) {
   );
 }
 
-type WatchPageProps = {
-  params: { id: string };
-};
-
-export default async function Page({ params }: WatchPageProps) {
-  const { id } = params;
+/**
+ * PUBLIC_INTERFACE
+ * Watch page route handler.
+ * Accepts dynamic route param { id } via Next.js App Router.
+ */
+export default function Page({ params }: any) {
+  const { id } = params as { id: string };
 
   return (
     <main className="mx-auto max-w-[1400px] px-4 py-4 md:py-6">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         <section className="lg:col-span-8">
-          <Suspense fallback={
-            <div className="space-y-4">
-              <div className="aspect-video w-full rounded-xl bg-gray-200 animate-pulse" />
-              <div className="h-8 w-2/3 rounded bg-gray-200 animate-pulse" />
-              <div className="h-20 w-full rounded bg-gray-100 animate-pulse" />
-            </div>
-          }>
+          <Suspense
+            fallback={
+              <div className="space-y-4">
+                <div className="aspect-video w-full rounded-xl bg-gray-200 animate-pulse" />
+                <div className="h-8 w-2/3 rounded bg-gray-200 animate-pulse" />
+                <div className="h-20 w-full rounded bg-gray-100 animate-pulse" />
+              </div>
+            }
+          >
             {/* @ts-expect-error Async Server Component */}
             <VideoSection id={id} />
           </Suspense>
@@ -67,13 +70,15 @@ export default async function Page({ params }: WatchPageProps) {
 
         <aside className="lg:col-span-4">
           <h2 className="mb-3 text-sm font-semibold text-gray-700">Recommended</h2>
-          <Suspense fallback={
-            <div className="space-y-3">
-              <div className="h-24 w-full rounded bg-gray-100 animate-pulse" />
-              <div className="h-24 w-full rounded bg-gray-100 animate-pulse" />
-              <div className="h-24 w-full rounded bg-gray-100 animate-pulse" />
-            </div>
-          }>
+          <Suspense
+            fallback={
+              <div className="space-y-3">
+                <div className="h-24 w-full rounded bg-gray-100 animate-pulse" />
+                <div className="h-24 w-full rounded bg-gray-100 animate-pulse" />
+                <div className="h-24 w-full rounded bg-gray-100 animate-pulse" />
+              </div>
+            }
+          >
             {/* @ts-expect-error Async Server Component */}
             <RecommendationsSection id={id} />
           </Suspense>
