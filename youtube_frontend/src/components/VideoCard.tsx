@@ -67,7 +67,7 @@ export default function VideoCard({ video }: { video: Video }) {
               {formatViews(video.views)} views
               {video.publishedAt ? (
                 <>
-                  {" • "}
+                  {" \u2022 "}
                   {formatDistanceToNowStrict(new Date(video.publishedAt))} ago
                 </>
               ) : null}
