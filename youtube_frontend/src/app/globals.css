@@ -1,26 +1,147 @@
 @import "tailwindcss";
 
+/* Ocean Professional Theme CSS Variables */
 :root {
-  --color-primary: #000000;
-  --color-secondary: #FFFFFF;
-  --color-accent: #3B82F6;
-  --color-background: #FFFFFF;
+  /* Core theme colors */
+  --color-primary: #2563EB; /* primary */
+  --color-secondary: #F59E0B; /* secondary and success accent per spec */
+  --color-success: #F59E0B; /* success */
+  --color-error: #EF4444; /* error */
+  --color-text: #111827; /* text */
+  --color-background: #f9fafb; /* background */
+  --color-surface: #ffffff; /* surface */
+
+  /* Derived tokens */
+  --ring: 0 0% 0%; /* used by Tailwind ring utilities as fallback */
+  --radius-sm: 0.375rem;  /* 6px rounded */
+  --radius-md: 0.5rem;    /* 8px rounded */
+  --radius-lg: 0.75rem;   /* 12px rounded */
+
+  /* Shadows */
+  --shadow-subtle: 0 1px 2px rgba(17, 24, 39, 0.04), 0 1px 1px rgba(17, 24, 39, 0.02);
+  --shadow-medium: 0 4px 6px -1px rgba(17, 24, 39, 0.06), 0 2px 4px -2px rgba(17, 24, 39, 0.04);
+
+  /* Gradient tokens (usable on header) */
+  --gradient-from: rgb(59 130 246 / 0.10); /* from-blue-500/10 */
+  --gradient-to: #f9fafb; /* to-gray-50 */
 }
 
-* {
+/* Base resets */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
-html,
-body {
+html, body {
   max-width: 100vw;
   overflow-x: hidden;
   background-color: var(--color-background);
-  color: var(--color-primary);
+  color: var(--color-text);
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Layout helpers */
+.app-root {
+  min-height: 100dvh;
+  background: var(--color-background);
+}
+
+/* Sticky header placeholder styles (gradient + subtle border and shadow) */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: saturate(180%) blur(6px);
+  background-image: linear-gradient(to right, var(--gradient-from), var(--gradient-to));
+  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+  box-shadow: var(--shadow-subtle);
+}
+
+/* Container sizing */
+.container-responsive {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  max-width: 1280px;
+}
+
+/* Cards / surfaces */
+.surface {
+  background: var(--color-surface);
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  box-shadow: var(--shadow-subtle);
+  border-radius: var(--radius-lg);
+}
+
+/* Utility classes per request */
+/* Subtle shadows */
+.shadow-subtle { box-shadow: var(--shadow-subtle); }
+.shadow-medium { box-shadow: var(--shadow-medium); }
+
+/* Rounded corners */
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+
+/* Transitions */
+.transition-base { transition: all 200ms ease; }
+
+/* Gradient utility usable on header or sections */
+.bg-ocean-gradient {
+  background-image: linear-gradient(to right, var(--gradient-from), var(--gradient-to));
+}
+
+/* Accent and states */
+.text-primary { color: var(--color-primary); }
+.bg-primary { background-color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.bg-secondary { background-color: var(--color-secondary); }
+.text-error { color: var(--color-error); }
+.bg-error { background-color: var(--color-error); }
+
+/* Focus ring for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Link styles */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Header sizing */
+.header-content {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.75rem;
+}
+
+/* Main spacing */
+.app-main {
+  padding-block: 1rem;
+}
+
+@media (min-width: 640px) {
+  .header-content { padding-block: 0.875rem; }
+  .app-main { padding-block: 1.25rem; }
+}
+
+@media (min-width: 1024px) {
+  .header-content { padding-block: 1rem; }
+  .app-main { padding-block: 1.5rem; }
 }
