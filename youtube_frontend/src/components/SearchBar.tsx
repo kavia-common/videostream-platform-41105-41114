@@ -4,10 +4,9 @@ import React, { useCallback, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 /**
- * SearchBar component.
- * Accepts user input and navigates to /search?q=<query> on submit.
- *
  * PUBLIC_INTERFACE
+ * SearchBar component.
+ * Accepts user input and navigates to /search?q=<query> on submit with accessible controls.
  */
 export default function SearchBar(): React.ReactElement {
   /** This is a public function. */
@@ -21,7 +20,6 @@ export default function SearchBar(): React.ReactElement {
       e.preventDefault();
       const trimmed = query.trim();
       if (!trimmed) {
-        // If empty, go to a generic search page to avoid staying idle.
         router.push("/search");
         return;
       }
@@ -34,17 +32,22 @@ export default function SearchBar(): React.ReactElement {
   return (
     <form onSubmit={onSubmit} className="w-full">
       <div className="relative flex items-center">
+        <label htmlFor="search-input" className="sr-only">
+          Search videos
+        </label>
         <input
+          id="search-input"
           aria-label="Search videos"
-          placeholder="Search videos..."
+          placeholder="Search videos"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full rounded-l-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full rounded-l-md border border-slate-300 bg-white/95 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus-visible:ring-2 focus-visible:ring-blue-500/50 focus:border-blue-500/60"
         />
         <button
           type="submit"
           aria-label="Search"
-          className="inline-flex items-center gap-2 rounded-r-md border border-blue-600 bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          title="Search"
+          className="inline-flex items-center gap-2 rounded-r-md border border-blue-600 bg-blue-600/90 px-3 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-blue-600 focus-visible:ring-2 focus-visible:ring-blue-500/50"
         >
           <svg
             className="h-4 w-4 text-white"

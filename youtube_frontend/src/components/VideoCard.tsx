@@ -13,7 +13,6 @@ import type { Video } from "../lib/types";
 export default function VideoCard({ video }: { video: Video }) {
   /** Render the channel avatar if provided or a fallback */
   const renderAvatar = () => {
-    // No avatar URL in current Video type; render initials
     const initials =
       (video.channelName?.match(/\b\w/g) || [])
         .slice(0, 2)
@@ -27,15 +26,22 @@ export default function VideoCard({ video }: { video: Video }) {
   };
 
   const href = `/watch/${video.id}`;
+  const title = video.title || "Untitled video";
+  const thumb = video.thumbnailUrl || "/placeholder-thumb.jpg";
 
   return (
-    <article className="group rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
-      <Link href={href} className="block relative aspect-video bg-gray-100">
+    <article className="group rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50">
+      <Link
+        href={href}
+        className="block relative aspect-video bg-gray-100"
+        aria-label={`Watch ${title}`}
+        title={title}
+      >
         {/* Thumbnail */}
-        {video.thumbnailUrl ? (
+        {thumb ? (
           <Image
-            src={video.thumbnailUrl}
-            alt={video.title}
+            src={thumb}
+            alt={title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover group-hover:scale-[1.01] transition-transform duration-200"
@@ -56,9 +62,9 @@ export default function VideoCard({ video }: { video: Video }) {
       <div className="p-3 flex gap-3">
         <div className="shrink-0">{renderAvatar()}</div>
         <div className="min-w-0">
-          <Link href={href} className="block">
-            <h3 className="line-clamp-2 text-sm font-semibold text-gray-900 hover:text-blue-700 transition-colors">
-              {video.title}
+          <Link href={href} className="block" aria-label={title} title={title}>
+            <h3 className="line-clamp-2 text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">
+              {title}
             </h3>
           </Link>
           <div className="mt-1 text-xs text-gray-600">

@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "../components/Header";
 
 /**
+ * PUBLIC_INTERFACE
  * Root layout wraps the entire application and renders the Header.
  * The Header contains the SearchBar and navigation.
  * Designed to be compatible with next export.
@@ -28,7 +29,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Header />
-        <main id="main-content" className="app-main" role="main">
+        <main id="main-content" className="app-main" role="main" aria-label="Main content">
           <div className="container-responsive mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
             {children}
           </div>

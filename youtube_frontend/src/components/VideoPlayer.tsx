@@ -57,14 +57,14 @@ export default function VideoPlayer({
 
   if (!sources || sources.length === 0) {
     return (
-      <div className={cn("aspect-video w-full bg-gray-100 rounded-lg flex items-center justify-center", className)}>
+      <div className={cn("aspect-video w-full bg-gray-100 rounded-lg flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50", className)}>
         <p className="text-sm text-gray-600">No video source available</p>
       </div>
     );
   }
 
   return (
-    <div className={cn("w-full", className)}>
+    <div className={cn("w-full outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50", className)}>
       <div className="relative w-full aspect-video overflow-hidden rounded-xl bg-gray-100 ring-1 ring-gray-200">
         {!error ? (
           <video
@@ -75,6 +75,8 @@ export default function VideoPlayer({
             autoPlay={autoPlay}
             muted={muted}
             playsInline
+            aria-label="Video player"
+            title="Video player"
           >
             {sources.map((s, idx) => (
               <source key={`${s.src}-${idx}`} src={s.src} type={s.type || "video/mp4"} />

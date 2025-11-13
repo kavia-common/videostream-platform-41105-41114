@@ -108,6 +108,9 @@ body {
 .bg-error { background-color: var(--color-error); }
 
 /* Focus ring for accessibility */
+:focus {
+  outline: none;
+}
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;

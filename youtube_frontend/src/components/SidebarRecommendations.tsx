@@ -20,28 +20,38 @@ export default function SidebarRecommendations({
 }: SidebarRecommendationsProps) {
   return (
     <aside className={cn("w-full space-y-3", className)}>
-      {videos?.filter(v => v.id !== currentId).map((video) => (
-        <Link
-          key={video.id}
-          href={`/watch/${video.id}`}
-          className="flex gap-3 rounded-lg border border-gray-100 bg-white hover:bg-gray-50 transition p-2"
-        >
-          <div className="relative h-20 w-36 shrink-0 overflow-hidden rounded-md bg-gray-100">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              alt={video.title}
-              src={video.thumbnailUrl || "/placeholder.png"}
-              className="h-full w-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="line-clamp-2 text-sm font-medium text-gray-900">{video.title}</div>
-            <div className="mt-1 text-xs text-gray-600">{video.channelName}</div>
-            <div className="text-xs text-gray-500">{formatViews(video.views)} • {formatDate(video.publishedAt)}</div>
-          </div>
-        </Link>
-      ))}
+      {videos?.filter(v => v.id !== currentId).map((video) => {
+        const title = video.title || "Untitled video";
+        const thumb = video.thumbnailUrl || "/placeholder-thumb.jpg";
+        return (
+          <Link
+            key={video.id}
+            href={`/watch/${video.id}`}
+            className="group flex gap-3 rounded-lg border border-gray-100 bg-white hover:bg-gray-50 transition p-2 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50"
+            aria-label={`Watch ${title}`}
+            title={title}
+          >
+            <div className="relative h-20 w-36 shrink-0 overflow-hidden rounded-md bg-gray-100">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                alt={title}
+                src={thumb}
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                loading="lazy"
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="line-clamp-2 text-sm font-medium text-gray-900">{title}</div>
+              {video.channelName ? (
+                <div className="mt-1 text-xs text-gray-600">{video.channelName}</div>
+              ) : null}
+              <div className="text-xs text-gray-500">
+                {formatViews(video.views)} {video.publishedAt ? "• " + formatDate(video.publishedAt) : ""}
+              </div>
+            </div>
+          </Link>
+        );
+      })}
     </aside>
   );
 }

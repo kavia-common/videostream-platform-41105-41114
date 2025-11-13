@@ -37,18 +37,21 @@ async function VideoSection({ id }: { id: string }) {
 
 async function RecommendationsSection({ id }: { id: string }) {
   const recs: Video[] = await getRecommendations(id).catch(() => []);
-  return (
-    <SidebarRecommendations videos={recs} currentId={id} />
-  );
+  return <SidebarRecommendations videos={recs} currentId={id} />;
 }
 
 /**
  * PUBLIC_INTERFACE
  * Watch page route handler.
  * Accepts dynamic route param { id } via Next.js App Router.
+ *
+ * Note: For Next.js PageProps, 'params' can be a Promise.
  */
-export default function Page({ params }: any) {
-  const { id } = params as { id: string };
+type WatchPageProps = { params: Promise<Record<string, string>> };
+
+export default async function Page({ params }: WatchPageProps) {
+  const resolved = await params;
+  const id = resolved.id as string;
 
   return (
     <main className="mx-auto max-w-[1400px] px-4 py-4 md:py-6">
@@ -63,7 +66,6 @@ export default function Page({ params }: any) {
               </div>
             }
           >
-            {/* @ts-expect-error Async Server Component */}
             <VideoSection id={id} />
           </Suspense>
         </section>
@@ -79,7 +81,6 @@ export default function Page({ params }: any) {
               </div>
             }
           >
-            {/* @ts-expect-error Async Server Component */}
             <RecommendationsSection id={id} />
           </Suspense>
         </aside>
