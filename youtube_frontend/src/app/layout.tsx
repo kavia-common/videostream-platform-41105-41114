@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
+import Header from "../components/Header";
 
+/**
+ * Root layout wraps the entire application and renders the Header.
+ * The Header contains the SearchBar and navigation.
+ * Designed to be compatible with next export.
+ */
 export const metadata: Metadata = {
-  title: "VideoStream – Ocean Professional",
+  title: "StreamView – Ocean Professional",
   description:
-    "A modern video platform UI with browse, search, playback, and recommendations.",
-  applicationName: "VideoStream",
-  keywords: ["video", "stream", "browse", "search", "playback", "next.js"],
+    "A modern, YouTube-like experience to discover and watch video content.",
+  applicationName: "StreamView",
+  keywords: ["video", "stream", "search", "watch", "YouTube-like", "Next.js"],
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-/**
- * Root layout that provides the global app shell with a sticky header placeholder
- * and a responsive main content container. Designed to be compatible with next export.
- */
 export default function RootLayout({
   children,
 }: {
@@ -22,43 +23,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="app-root" suppressHydrationWarning>
-        {/* Accessible application header with gradient background */}
-        <header className="app-header" role="banner" aria-label="Global header">
-          <div className="container-responsive header-content">
-            {/* Placeholder branding and future search input area */}
-            <div className="flex items-center gap-2 min-w-0">
-              <div
-                aria-hidden
-                className="h-8 w-8 rounded-md bg-primary shadow-subtle"
-                style={{ backgroundColor: "var(--color-primary)" }}
-              />
-              <span className="font-semibold text-sm sm:text-base text-primary">
-                VideoStream
-              </span>
-            </div>
-
-            <nav
-              aria-label="Primary"
-              className="flex items-center gap-3 text-sm"
-            >
-              {/* Placeholder nav items; to be wired later */}
-              <Link href="/" className="transition-base hover:opacity-80">
-                Home
-              </Link>
-              <Link
-                href="/browse"
-                className="transition-base hover:opacity-80 hidden sm:inline"
-              >
-                Browse
-              </Link>
-            </nav>
-          </div>
-        </header>
-
-        {/* Main content area with responsive container */}
+      <body
+        className="app-root bg-[#f9fafb] text-[#111827] antialiased"
+        suppressHydrationWarning
+      >
+        <Header />
         <main id="main-content" className="app-main" role="main">
-          <div className="container-responsive">{children}</div>
+          <div className="container-responsive mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+            {children}
+          </div>
         </main>
       </body>
     </html>
