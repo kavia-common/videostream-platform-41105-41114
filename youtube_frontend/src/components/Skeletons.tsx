@@ -22,13 +22,33 @@ export function SkeletonCard(): React.ReactElement {
   );
 }
 
-// PUBLIC_INTERFACE
+/** PUBLIC_INTERFACE */
 export function SkeletonGrid({ count = 12 }: { count?: number }): React.ReactElement {
   /** This is a public function. */
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
+    <div
+      className="
+        grid gap-4
+        grid-cols-1
+        sm:grid-cols-2
+        lg:grid-cols-3
+        xl:grid-cols-4
+      "
+    >
       {Array.from({ length: count }).map((_, idx) => (
-        <SkeletonCard key={idx} />
+        <div
+          key={idx}
+          className="rounded-lg overflow-hidden bg-white border border-gray-100"
+        >
+          <div className="aspect-video bg-gradient-to-br from-blue-500/10 to-gray-50 animate-pulse" />
+          <div className="p-3 flex gap-3">
+            <div className="w-9 h-9 rounded-full bg-gray-200 animate-pulse" />
+            <div className="flex-1 space-y-2">
+              <div className="h-3 bg-gray-200 rounded animate-pulse" />
+              <div className="h-3 w-2/3 bg-gray-200 rounded animate-pulse" />
+            </div>
+          </div>
+        </div>
       ))}
     </div>
   );
